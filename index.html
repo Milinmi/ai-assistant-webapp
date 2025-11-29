@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI-Ассистент</title>
+  
+  <!-- Telegram WebApp SDK -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  
+  <!-- SVG.js библиотека -->
+  <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js"></script>
+  
+  <!-- Стили -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Основной контейнер -->
+  <div class="container">
+    
+    <!-- Заголовок -->
+    <header class="header">
+      <h1 id="assistantName">AI-Ассистент</h1>
+      <p id="assistantDescription">Загрузка...</p>
+      <div id="accessLevel" class="access-level">
+        <span class="level-badge">Базовый уровень</span>
+      </div>
+    </header>
+    
+    <!-- Аватар -->
+    <div class="avatar-section">
+      <div id="avatarContainer" class="avatar-container"></div>
+    </div>
+    
+    <!-- Чат -->
+    <div class="chat-section">
+      <div id="messages" class="messages"></div>
+      
+      <!-- Ввод сообщения -->
+      <div class="input-section">
+        <textarea 
+          id="messageInput" 
+          class="message-input" 
+          placeholder="Напишите сообщение или нажмите на микрофон..."
+          rows="1"
+        ></textarea>
+        
+        <!-- НОВАЯ КНОПКА МИКРОФОНА -->
+        <button 
+          id="microphoneBtn" 
+          class="microphone-btn" 
+          title="Голосовой ввод"
+        >
+          🎤
+        </button>
+        
+        <button id="sendButton" class="send-button">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </div>
+    </div>
+    
+  </div>
+  
+  <!-- Главный скрипт (ES6 модуль) -->
+  <script type="module" src="app.js"></script>
+</body>
+</html>
