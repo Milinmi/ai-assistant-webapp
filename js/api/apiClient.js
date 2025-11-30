@@ -4,7 +4,12 @@
 
 class APIClient {
   constructor() {
-    this.baseURL = 'https://ai-assistant-production-fbb5.up.railway.app';
+    // Умный выбор сервера
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+      this.baseURL = 'http://localhost:3000';
+    } else {
+      this.baseURL = 'https://ai-assistant-production-fbb5.up.railway.app';
+}
     console.log('🔗 API Client инициализирован:', this.baseURL);
   }
 
