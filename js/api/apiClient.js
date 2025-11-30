@@ -4,7 +4,7 @@
 
 class APIClient {
   constructor() {
-    this.baseURL = window.location.origin;
+    this.baseURL = 'https://ai-assistant-production-fbb5.up.railway.app';
     console.log('🔗 API Client инициализирован:', this.baseURL);
   }
 
