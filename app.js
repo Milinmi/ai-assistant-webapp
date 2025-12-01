@@ -336,7 +336,10 @@ async function sendMessage() {
     livingAvatar.setState('thinking');
     
     // Отправляем запрос на сервер
-    const response = await fetch('/api/chat', {
+    const apiBase = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') 
+  ? 'http://localhost:3000' 
+  : 'https://ai-assistant-production-fbb5.up.railway.app';
+const response = await fetch(`${apiBase}/api/chat`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
