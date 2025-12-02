@@ -46,18 +46,19 @@ async function init() {
     
     // Инициализация userId с умной логикой
     if (window.Telegram && window.Telegram.WebApp) {
-      // Работаем в Telegram WebApp
-      const tg = window.Telegram.WebApp;
-      tg.expand();
-      userId = tg.initDataUnsafe?.user?.id;
-      
-      if (userId) {
-        console.log('✅ Telegram WebApp: используется реальный Telegram ID:', userId);
-      } else {
-        // Telegram WebApp открыт, но ID не получен (редкий случай)
-        userId = config.testUserId || 'test_user_' + Date.now();
-        console.log('⚠️ Telegram ID не получен, используется тестовый:', userId);
-      }
+  const tg = window.Telegram.WebApp;
+  tg.ready();  // ← добавили
+  tg.expand();
+  
+  const initData = tg.initData;  // ← для валидации на сервере
+  
+  if (initData && tg.initDataUnsafe?.user?.id) {
+    userId = String(tg.initDataUnsafe.user.id);  // ← String()!
+    console.log('✅ Telegram userId получен:', userId);
+  } else {
+    userId = config.testUserId || 'test_user_' + Date.now();
+    console.log('⚠️ Telegram ID не получен, используется тестовый:', userId);
+  }
     } else {
       // Работаем в обычном браузере (тестирование)
       if (config.nodeEnv === 'development' && config.testUserId) {
@@ -345,7 +346,7 @@ const response = await fetch(`${apiBase}/api/chat`, {
       body: JSON.stringify({
         assistantId: currentAssistant,
         message: message,
-        userId: String(userId),
+        userId: userId,
         level: 'basic'
       })
     });
