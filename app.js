@@ -12,6 +12,7 @@ import LivingAvatar from './js/core/LivingAvatar.js';
 
 let livingAvatar = null;
 let userId = null;
+let initData = null;  // Telegram initData для валидации
 let currentAssistant = 'coach';
 
 // Элементы интерфейса
@@ -50,7 +51,8 @@ async function init() {
       tg.ready();
       tg.expand();
       
-      const initData = tg.initData;
+      // Сохраняем initData для валидации на сервере
+      initData = tg.initData;
       
       if (initData && tg.initDataUnsafe?.user?.id) {
         userId = String(tg.initDataUnsafe.user.id);
@@ -354,6 +356,7 @@ const response = await fetch(`${apiBase}/api/chat`, {
         assistantId: currentAssistant,
         message: message,
         userId: String(userId),
+        initData: initData,  // Для валидации на сервере
         level: 'basic'
       })
     });
