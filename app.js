@@ -46,26 +46,19 @@ async function init() {
     
     // Инициализация userId с умной логикой
     if (window.Telegram && window.Telegram.WebApp) {
-  const tg = window.Telegram.WebApp;
-  tg.ready();  // ← добавили
-  tg.expand();
-  
-  const initData = tg.initData;  // ← для валидации на сервере
-  
-  if (initData && tg.initDataUnsafe?.user?.id) {
-    userId = String(tg.initDataUnsafe.user.id);  // ← String()!
-    console.log('✅ Telegram userId получен:', userId);
-// Временно: показываем userId на экране
-document.body.insertAdjacentHTML('afterbegin', 
-  `<div style="position:fixed;top:10px;left:10px;background:green;color:white;padding:10px;z-index:9999;border-radius:5px;">
-    UserID: ${userId}
-  </div>`
-);	
-
-  } else {
-    userId = config.testUserId || 'test_user_' + Date.now();
-    console.log('⚠️ Telegram ID не получен, используется тестовый:', userId);
-  }
+      const tg = window.Telegram.WebApp;
+      tg.ready();
+      tg.expand();
+      
+      const initData = tg.initData;
+      
+      if (initData && tg.initDataUnsafe?.user?.id) {
+        userId = String(tg.initDataUnsafe.user.id);
+        console.log('✅ Telegram userId получен:', userId);
+      } else {
+        userId = config.testUserId || 'test_user_' + Date.now();
+        console.log('⚠️ Telegram ID не получен, используется тестовый:', userId);
+      }
     } else {
       // Работаем в обычном браузере (тестирование)
       if (config.nodeEnv === 'development' && config.testUserId) {
@@ -78,6 +71,13 @@ document.body.insertAdjacentHTML('afterbegin',
         console.log('⚠️ Браузер (не Telegram): случайный userId:', userId);
       }
     }
+    
+    // ВРЕМЕННО: Показываем userId на экране (для отладки)
+    document.body.insertAdjacentHTML('afterbegin', 
+      `<div id="debugUserId" style="position:fixed;top:10px;left:10px;background:green;color:white;padding:10px;z-index:9999;border-radius:5px;font-family:monospace;">
+        UserID: ${userId}
+      </div>`
+    );
     
     // Получаем элементы интерфейса
     messagesContainer = document.getElementById('messages');
@@ -353,7 +353,7 @@ const response = await fetch(`${apiBase}/api/chat`, {
       body: JSON.stringify({
         assistantId: currentAssistant,
         message: message,
-        userId: userId,
+        userId: String(userId),
         level: 'basic'
       })
     });
