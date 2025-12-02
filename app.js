@@ -55,6 +55,13 @@ async function init() {
   if (initData && tg.initDataUnsafe?.user?.id) {
     userId = String(tg.initDataUnsafe.user.id);  // ← String()!
     console.log('✅ Telegram userId получен:', userId);
+// Временно: показываем userId на экране
+document.body.insertAdjacentHTML('afterbegin', 
+  `<div style="position:fixed;top:10px;left:10px;background:green;color:white;padding:10px;z-index:9999;border-radius:5px;">
+    UserID: ${userId}
+  </div>`
+);	
+
   } else {
     userId = config.testUserId || 'test_user_' + Date.now();
     console.log('⚠️ Telegram ID не получен, используется тестовый:', userId);
