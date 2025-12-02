@@ -345,7 +345,7 @@ const response = await fetch(`${apiBase}/api/chat`, {
       body: JSON.stringify({
         assistantId: currentAssistant,
         message: message,
-        userId: userId,
+        userId: String(userId),
         level: 'basic'
       })
     });
